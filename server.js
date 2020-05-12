@@ -26,7 +26,7 @@ io.on('connection', function(socket){
 		x: 500,
 		y: 500
 	};
-	socket.emit('actualPlayer', players);
+	socket.emit('actualPlayers', players);
 	socket.broadcast.emit('new_player', players[socket.id]);
 
 	socket.on('disconnect', function(){
