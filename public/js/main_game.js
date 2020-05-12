@@ -50,10 +50,19 @@ function create(){
 		});
 	});
 
-	this.io.on('new_player', function(pinfo){
+	this.io.on('new_player', function(pInfo){
 		createEnemy(self.scene, pInfo);
 	});
 	//new Player(this, 500, 500);
+	enemies_ref = this.enemies;
+	this.io.on('enemy_moved', function(player_data){
+		 enemies_ref.getChildren().forEach(function(enemy) {
+            if (player_data.player_id == enemy.id) {
+                enemy.setPosition(player_data.x, player_data.y);
+                enemy.setAngle(player_data.angle);
+            }   
+        });
+	});
 }
 
 function update(){

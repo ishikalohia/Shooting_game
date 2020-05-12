@@ -29,6 +29,14 @@ io.on('connection', function(socket){
 	socket.emit('actualPlayers', players);
 	socket.broadcast.emit('new_player', players[socket.id]);
 
+	socket.on('player_moved', function(movement_data) {
+        players[socket.id].x = movement_data.x;
+        players[socket.id].y = movement_data.y;
+        players[socket.id].angle = movement_data.angle;
+
+        // send to all players data of movement
+        socket.broadcast.emit('enemy_moved', players[socket.id]);
+    });
 	socket.on('disconnect', function(){
 		console.log("Someone has disconnected");
 		delete players[socket.id];
