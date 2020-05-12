@@ -39,6 +39,8 @@ function create(){
 	self = this;
 
 	this.enemies = this.physics.add.group();
+	this.bullets = this.physics.add.group();
+
 	this.io.on('actualPlayers', function(players){
 		Object.keys(players).forEach(function(id){
 			if(players[id].player_id == self.io.id){
@@ -63,6 +65,10 @@ function create(){
             }   
         });
 	});
+
+	this.io.on('new_bullet', function(bullet_data) {
+        new Shot(self.scene, bullet_data.x, bullet_data.y, bullet_data.angle);
+    });
 }
 
 function update(){
